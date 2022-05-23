@@ -1,0 +1,18 @@
+//
+//  SVGKit-iOS-Prefix.pch
+//  SVGKit-iOS
+//
+//  Created by Stephen Kelly on 23/5/2022.
+//  Copyright © 2022 na. All rights reserved.
+//
+
+#ifndef SVGKit_iOS_Prefix_pch
+#define SVGKit_iOS_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+// Adds a prefix to publically exported symbols
+ #import "NamespacedDependencies.h"
+
+#endif /* SVGKit_iOS_Prefix_pch */
