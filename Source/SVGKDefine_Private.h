@@ -8,23 +8,27 @@ SVGKDefine define some common macro used for private header.
 #define SVGKDefine_Private_h
 
 #import "SVGKDefine.h"
-#import <CocoaLumberjack/CocoaLumberjack.h>
 
 // These macro is only used inside framework project, does not expose to public header and effect user's define
 
 #define SVGKIT_LOG_CONTEXT 556
 
-#define SVGKitLogError(frmt, ...)   LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   SVGKIT_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define SVGKitLogWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, SVGKIT_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define SVGKitLogInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    SVGKIT_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define SVGKitLogDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   SVGKIT_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-#define SVGKitLogVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, SVGKIT_LOG_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define MR_SVGKIT_LOGLEVEL_ERROR 1
+#define MR_SVGKIT_LOGLEVEL_WARN 2
+#define MR_SVGKIT_LOGLEVEL_INFO 3
+#define MR_SVGKIT_LOGLEVEL_DEBUG 4
+#define MR_SVGKIT_LOGLEVEL_VERBOSE 5
 
-#if DEBUG
-static const int ddLogLevel = DDLogLevelVerbose;
-#else
-static const int ddLogLevel = DDLogLevelWarning;
-#endif
+// Set the log level here to debug SVGKit issues
+#define MR_SVGKIT_LOGLEVEL MR_SVGKIT_LOGLEVEL_ERROR
+
+#define MR_DO_NOTHING ({;})
+
+#define SVGKitLogError(frmt, ...)       ((MR_SVGKIT_LOGLEVEL >= MR_SVGKIT_LOGLEVEL_ERROR) ? NSLog(frmt, ##__VA_ARGS__) : MR_DO_NOTHING)
+#define SVGKitLogWarn(frmt, ...)        ((MR_SVGKIT_LOGLEVEL >= MR_SVGKIT_LOGLEVEL_WARN) ? NSLog(frmt, ##__VA_ARGS__) : MR_DO_NOTHING)
+#define SVGKitLogInfo(frmt, ...)        ((MR_SVGKIT_LOGLEVEL >= MR_SVGKIT_LOGLEVEL_INFO) ? NSLog(frmt, ##__VA_ARGS__) : MR_DO_NOTHING)
+#define SVGKitLogDebug(frmt, ...)       ((MR_SVGKIT_LOGLEVEL >= MR_SVGKIT_LOGLEVEL_DEBUG) ? NSLog(frmt, ##__VA_ARGS__) : MR_DO_NOTHING)
+#define SVGKitLogVerbose(frmt, ...)     ((MR_SVGKIT_LOGLEVEL >= MR_SVGKIT_LOGLEVEL_VERBOSE) ? NSLog(frmt, ##__VA_ARGS__) : MR_DO_NOTHING)
 
 #if SVGKIT_MAC
 #define NSStringFromCGRect(rect) NSStringFromRect(rect)
