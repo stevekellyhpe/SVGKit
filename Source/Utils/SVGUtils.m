@@ -486,8 +486,8 @@ CGFloat SVGPercentageFromString (const char *string) {
 CGMutablePathRef createPathFromPointsInString (const char *string, boolean_t close) {
     CGMutablePathRef path = CGPathCreateMutable();
     const char *progressPtr = string;
-    bool xScanned = false;
-    bool commaScanned = false;
+    boolean_t xScanned = false;
+    boolean_t commaScanned = false;
     float x = 0.0;
     
     while (*progressPtr) {
