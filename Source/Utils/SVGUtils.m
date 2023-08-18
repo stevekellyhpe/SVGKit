@@ -496,8 +496,8 @@ CGMutablePathRef createPathFromPointsInString (const char *string, boolean_t clo
             continue;
         }
         
-        // If we've already scanned x there may or may not be a single comma
-        if (xScanned && !commaScanned && *progressPtr == ',') {
+        // There may or may not be a single comma between coordinates or coordinate pairs
+        if (!commaScanned && *progressPtr == ',') {
             progressPtr++;
             commaScanned = true;
             continue;
@@ -521,12 +521,12 @@ CGMutablePathRef createPathFromPointsInString (const char *string, boolean_t clo
                 CGPathAddLineToPoint(path, NULL, x, nextCoordinate);
             }
             xScanned = false;
-            commaScanned = false;
         }
         else {
             x = nextCoordinate;
             xScanned = true;
         }
+        commaScanned = false;
     }
     
     if (close) {
